@@ -9,8 +9,8 @@
 struct Json_Type{
 
     private:
-    std::vector<float> array;
-    std::vector<Json_Type> dataobj; // or map?
+   
+    // or map?
     int number;
     bool expression;
     std::string name_expr;
@@ -21,7 +21,7 @@ struct Json_Type{
     Json_Type(bool expression){
 
     }
-    Json_Type(int number){
+    Json_Type(int number):number(number){
 
     }
     Json_Type(std::vector<Json_Type> Object){
@@ -79,12 +79,13 @@ class Number : Values
 
 class Object : Values
 {
+     std::vector<Json_Type> dataobj;
 
 }; 
 
 class Array : Values
 {
-
+     std::vector<float> array;
 };
 
 
