@@ -14,12 +14,11 @@
 struct Json_Type{
 public:
     std::string Name;
-    pipes
+    friend Values;
 
     Json_Type(std::string name) {
         this->Name = name;
     }
-    
 };
 
 class Values
@@ -61,13 +60,13 @@ public:
      Object(std::vector<Json_Type> Object){
         this->dataobj=Object;
      }
-
 }; 
 
 class Array : Values
 {
+public:
      std::vector<float> array;
-     Array( std::vector<float> Array){
+     Array(std::vector<float> Array){
         this->array=Array;
      }
 };
