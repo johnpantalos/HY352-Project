@@ -37,7 +37,7 @@ public:
         this->string = str;
     }
 };
-
+lolollololollololololololololololololololololool
 class Number : Values
 {
 public:
