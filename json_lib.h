@@ -18,6 +18,7 @@ public:
     Json_Type(std::string name) {
         this->Name = name;
     }
+    
 };
 
 class Values
@@ -37,7 +38,7 @@ public:
         this->string = str;
     }
 };
-lolollololollololololololololololololololololool
+
 class Number : Values
 {
 public:
