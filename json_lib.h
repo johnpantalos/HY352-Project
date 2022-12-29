@@ -5,20 +5,20 @@
 #include <map>
 #ifndef json_lib_h
 #define json_lib_h
-#define JSON(var) Json_Type json
-#define STRING(name) new String
-#define NUMBER(name) new Number
-#define OBJECT{} new Object
-#define ARRAY(name) new Array
+#define JSON(var) new Json_Type(var)
+#define STRING(name) new String(name)
+#define NUMBER(num) new Number(num)
+#define OBJECT{} new Object()
+#define ARRAY[] new Array()
 
 struct Json_Type{
 public:
     std::string Name;
+    friend Values;
 
     Json_Type(std::string name) {
         this->Name = name;
     }
-    
 };
 
 class Values
@@ -60,13 +60,13 @@ public:
      Object(std::vector<Json_Type> Object){
         this->dataobj=Object;
      }
-
 }; 
 
 class Array : Values
 {
+public:
      std::vector<float> array;
-     Array( std::vector<float> Array){
+     Array(std::vector<float> Array){
         this->array=Array;
      }
 };
