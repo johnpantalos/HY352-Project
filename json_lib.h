@@ -14,7 +14,7 @@ struct Json_Type{
     std::string str;
 
     public:
-
+    
     void setName(std::string Name){
         this->name=Name;
     }
@@ -38,6 +38,15 @@ struct Json_Type{
     }
     std::vector<Json_Type> getDataObj(){
         return this->dataobj;
+    }
+
+    bool is_Empty(){
+        if(this->getArray().size()==0 && this->getDataObj().size()==0
+            && this->getName()=="" && this->getString()==""){
+                return true;
+        }else{
+            return false;
+        }
     }
     
 };
