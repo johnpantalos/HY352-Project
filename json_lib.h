@@ -1,1 +1,3 @@
+struct Json_mytype{
 
+};
