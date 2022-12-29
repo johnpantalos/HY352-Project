@@ -8,7 +8,7 @@
 #define JSON(var) Json_Type json
 #define STRING(name) new String
 #define NUMBER(name) new Number
-#define OBJECT(name) new Object
+#define OBJECT{} new Object
 #define ARRAY(name) new Array
 
 struct Json_Type{
