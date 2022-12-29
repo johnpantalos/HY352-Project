@@ -20,7 +20,7 @@ struct Json_Type{
         this->name=Name;
     }
     void setValue(std::string Value){
-        this->value=String;
+        this->value=Value;
     }
     void setArray(std::vector<float> Table){
         this->array=Table;
