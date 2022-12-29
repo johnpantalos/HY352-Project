@@ -59,4 +59,35 @@ struct Json_Type{
     }
 
 };
+
+class Values
+{
+    public:
+        bool boolean; // True, False
+        int* ptr; // null
+};
+
+class String : Values
+{
+
+};
+
+class Number : Values
+{
+
+};
+
+class Object : Values
+{
+
+}; 
+
+class Array : Values
+{
+
+};
+
+
+
+
 #endif
