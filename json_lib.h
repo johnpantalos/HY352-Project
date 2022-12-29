@@ -12,26 +12,26 @@
 #define ARRAY(name) new Array
 
 struct Json_Type{
-    public:
-        std::string Name;
+public:
+    std::string Name;
 
-        public: Json_Type(std::string name) {
-            this->Name = name;
-        }
+    Json_Type(std::string name) {
+        this->Name = name;
+    }
 };
 
 class Values
 {
-    public:
-        bool boolean; // True, False
-        int* ptr; // null
+public:
+    bool boolean; // True, False
+    int* ptr; // null
 
 };
 
 class String : Values
 {
-    public:
-        std::string string;
+public:
+    std::string string;
 
     String(std::string str) {
         this->string = str;
@@ -40,23 +40,23 @@ class String : Values
 
 class Number : Values
 {
-    public:
-        int numberInt = 0;
-        float numberFloat = 0.0;
-
-    public: Number(int intNum) {
+public:
+    int numberInt = 0;
+    float numberFloat = 0.0;
+    Number(int intNum) {
         this->numberInt = intNum;
     }
 
-    public: Number(float floatNum) {
+    Number(float floatNum) {
         this->numberFloat = floatNum;
     }
 };
 
 class Object : Values
 {
+public:
      std::vector<Json_Type> dataobj;
-     public: Object(std::vector<Json_Type> Object){
+     Object(std::vector<Json_Type> Object){
         this->dataobj=Object;
      }
 
@@ -65,7 +65,7 @@ class Object : Values
 class Array : Values
 {
      std::vector<float> array;
-     public: Array( std::vector<float> Array){
+     Array( std::vector<float> Array){
         this->array=Array;
      }
 };
