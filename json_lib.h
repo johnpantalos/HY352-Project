@@ -7,8 +7,12 @@
 #define json_lib_h
 
 struct Json_Type{
+    public:
+        std::string Name;
 
-   
+        public Json_Type(std::string name) {
+            this->Name = name;
+        }
 };
 
 class Values
@@ -16,25 +20,31 @@ class Values
     public:
         bool boolean; // True, False
         int* ptr; // null
+
 };
 
 class String : Values
 {
     public:
-    std::string str;
+        std::string string;
 
-    String(std::string string) {
-        this->str = string;
+    String(std::string str) {
+        this->string = str;
     }
 };
 
 class Number : Values
 {
     public:
-    std::int number;
+        int numberInt = 0;
+        float numberFloat = 0.0;
 
-    Number(std::int num) {
-        this->number = num;
+    public Number(int intNum) {
+        this->numberInt = intNum;
+    }
+
+    public Number(float floatNum) {
+        this->numberFloat = floatNum;
     }
 };
 
