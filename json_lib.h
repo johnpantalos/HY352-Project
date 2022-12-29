@@ -20,12 +20,22 @@ class Values
 
 class String : Values
 {
+    public:
+    std::string str;
 
+    String(std::string string) {
+        this->str = string;
+    }
 };
 
 class Number : Values
 {
+    public:
+    std::int number;
 
+    Number(std::int num) {
+        this->number = num;
+    }
 };
 
 class Object : Values
