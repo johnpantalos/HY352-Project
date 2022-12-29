@@ -14,6 +14,7 @@
 struct Json_Type{
 public:
     std::string Name;
+    pipes
 
     Json_Type(std::string name) {
         this->Name = name;
