@@ -16,10 +16,15 @@
 #define NUMBER(num) Json_Type(num)
 #define ARRAY Json_Type(TMParray)
 #define OBJECT Json_Type(TMPobj)
-
+#define KEY(name) Json_Type(tmp = #name)
+#define KEY(name) TMPobj.insert(std::pair<<std::string, Json_Type>(#name,                // sto telos tou object    (to diko mou map) = TMPobj; TMPobj = clear()
+//#define :
 #define TRUE Json_Type(true)
 #define FALSE Json_Type(false)
 #define NULL Json_Type(nullptr)
+
+#define PRINT ;std::cout <<
+
 #define PROGRAM_BEGIN                \
     int main()                       \
     {                                \
@@ -28,41 +33,20 @@
         std::map<std::string, Json_Type> TMPobj; \
         std::vector<Json_Type> TMParray;
 
-        
+//JSON(book) = OBJECT{
+//
+//    KEY(title) : STRING("Gone Girl"),           // isws operator overload to : ??
+//    KEY(published) : NUMBER(2012),
+//    KEY(type) : STRING("Thriller"),
+//    }
+//}
 
 #define PROGRAM_END \
     ;               \
     return 0;       \
     }
 
-// template <typename T>
-// ostream& operator<<(ostream& os, const vector<T>& v)
-// {
-//     os << "[";
-//     for (int i = 0; i < v.size(); ++i) {
-//         os << v[i];
-//         if (i != v.size() - 1)
-//             os << ", ";
-//     }
-//     os << "]\n";
-//     return os;
-// } 
-// STO SET THA MPOREI NA KANEI FIND MESA SE ENA VECTOR OLA TA ONOMATA TWN METAVLHTVN
-
-//#define add_and_print(keyword) alpha_token_t *temp_token = static_cast<alpha_token_t*>(ylval);\
-//                temp_token = new alpha_token_t(yylineno, alpha_token_list.size() + 1, (std::string)yytext, (std::string)#keyword);\
-//                alpha_token_list.push_front(temp_token);\
-//            temp_token->print_token();
-//#define add_and_print_nested(keyword) temp_token2 = new alpha_token_t(yylineno, alpha_token_list.size() + 1, (std::string)yytext, (std::string)#keyword);\
-//                alpha_token_list.push_front(temp_token2);\
-//            temp_token2->print_token();
-// #undef add_and_print
-// #define add_and_print(x) return x;
-// #undef add_and_print_nested
-// #define add_and_print_nested(x)
-// #define print_rule(left, right) std::cout << "\033[1;32m LINE " << yylineno << ": " << #right  << " --> " << #left << "\033[0m" << std::endl
-
-int i = 0;
+int Helper = 0;
 
 struct Json_Type
 {
@@ -185,7 +169,6 @@ public:
     // std::string& operator[](Json_Type *obj);
     Json_Type& operator=(Json_Type *obj)
     {
-        //std::cout << this->GetName() << "\n";
         obj->setName(this->GetName());
         if (obj->GetFlag() == 1)
         {
@@ -217,8 +200,6 @@ public:
         {
             boolean = obj->boolean;
         }
-        //std::cout << obj.GetName() << "\n";
-
         return *obj;
     }
 
@@ -228,10 +209,10 @@ public:
 };
 
 std::map<std::string, Json_Type> CollectionVariables;
+
 Json_Type& Json_Type::operator[](Json_Type obj)
 {
-    i = 0;
-    // std::cout << obj.GetNumberInt();
+    Helper = 0;
     std::cout << obj.GetName();
     return *this;
 };
@@ -251,46 +232,20 @@ Json_Type& Json_Type::operator,(Json_Type obj1)
     auto it= CollectionVariables.end();
     it--;
 
-    if (i == 0) {
+    if (Helper == 0) {
         it->second.array.push_back(*this);
-        i++;
+        Helper++;
     }
 
     it->second.array.push_back(obj1);
     
-    for (int j = 0; j < it->second.array.size(); j++)
-    {
-        std::cout << it->second.array.at(j).GetNumberInt() << "\n";
-    }
-    std::cout << it->first << "\n";
-    
+    //for (int j = 0; j < it->second.array.size(); j++)
+    //{
+    //    std::cout << it->second.array.at(j).GetNumberInt() << "\n";
+    //}
+    //std::cout << it->first << "\n
     return *this;
-
 };
-
-
-// 1->string
-// 2->numbInt
-// 3->numbDouble
-// 4->bool
-// 5->array
-// 6,7->object
-
-//OBJECT{
-//KEY(title) : STRING("title"),
-//KEY(year) : NUMBER(2011)
-//}
-//
-//
-//ARRAY[
-//    NUMBER(2016),
-//        STRING("HY352"),
-//        OBJECT{
-//       KEY(id) : NUMBER(352)
-//    }
-//]
-
-
 
 void AddToVector(std::string(NameVar), Json_Type variable)
 {
@@ -303,6 +258,71 @@ void AddToVector(std::string(NameVar), Json_Type variable)
     }
 }
 
+// 1->string
+// 2->numbInt
+// 3->numbDouble
+// 4->bool
+// 5->array
+// 6,7->object
+
+//OBJECT{
+//KEY(title) : STRING("title"),
+//KEY(year) : NUMBER(2011)
+//}
+// 
+//
+//myType& operator,(myType value) {
+//    printerino(value, this);
+//
+//        if ((value.which == 2 || value.which == 3) && value.name == "") {
+//            //it is an array of intigers so goes to array
+//            // this->GetArray().size() == 0
+//            if (this->isARRAYempty()) {
+//                this->array.push_back(this->getINTEGER());
+//                this->edited = true;
+//            }
+//
+//            this->array.push_back(value.getINTEGER());
+//            this->setWHICH(5);
+//        }
+//        else if (this->getNAME() != "") {
+//            //overloads this with itselfs and value and returns
+//
+//            myType joker = *this;
+//
+//            this->clear();
+//            this->setWHICH(6);
+//            this->setMEMBER(true);
+//
+//            this->headOFdata.push_back(joker);
+//            this->headOFdata.push_back(value);
+//
+//        }
+//        else if (this->getNAME() == "" && value.getNAME() == "") {
+//            //overloads this with itsels and value and returns
+//
+//            myType joker = *this;
+//
+//            this->clear();
+//            this->setWHICH(6);
+//            this->setMEMBER(true);
+//
+//            this->headOFdata.push_back(joker);
+//            this->headOFdata.push_back(value);
+//        }
+//        else {
+//            //it is an array of intigers so goes to array
+//
+//            array.push_back(value.getINTEGER());
+//            this->setWHICH(5);
+//
+//        }
+//
+//    return *this;
+//
+//};
+// 
+// 
 // template<typename T> T& Json_Type::operator[](T elem)
 //{
 //     std::string elements = elem;
