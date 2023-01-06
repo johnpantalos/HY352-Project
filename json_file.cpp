@@ -16,15 +16,16 @@ JSON(empObj3) = TRUE
 //define emptyArray json with empty array
 JSON(emptyArray) = ARRAY
 
-JSON(week_temperatures2) = ARRAY[ NUMBER(20), NUMBER(19), NUMBER(18), NUMBER(17), NUMBER(16), NUMBER(15), NUMBER(14) ]
+JSON(week_temperatures2) = ARRAY[NUMBER(20), NUMBER(19), NUMBER(18), NUMBER(17), NUMBER(16), NUMBER(15), NUMBER(14)]
 
-JSON(object) = OBJECT
+JSON(object) = OBJECT;
 
-JSON(book) = OBJECT{
-	KEY(title) : STRING("Gone Girl"),
-	KEY(published) : NUMBER(2012),
-	KEY(type) : STRING("Thriller"
-}
+KEY(title) : STRING("Gone Girl")
+
+//JSON(book) = OBJECT{
+//	KEY(published) : NUMBER(2012),
+//	KEY(type): STRING("Thriller")
+//}
 
 //JSON(week_temperatures) = ARRAY[NUMBER(20)]
 
