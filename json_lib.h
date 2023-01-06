@@ -16,12 +16,23 @@
 #define NUMBER(num) Json_Type(num)
 #define ARRAY Json_Type(TMParray)
 #define OBJECT Json_Type(TMPobj)
-#define KEY(name) Json_Type(tmp = #name)
-#define KEY(name) TMPobj.insert(std::pair<<std::string, Json_Type>(#name,                // sto telos tou object    (to diko mou map) = TMPobj; TMPobj = clear()
-//#define :
+//#define KEY(name) Json_Type(tmp = #name)
+//#define KEY(name) TMPobj.insert(std::pair<<std::string, Json_Type>(#name, mytmp) :               // sto telos tou object    (to diko mou map) = TMPobj; TMPobj = clear()
+//#define KEY(name) Json_Type *name = new Json_Type:               // sto telos tou object    (to diko mou map) = TMPobj; TMPobj = clear()
 #define TRUE Json_Type(true)
 #define FALSE Json_Type(false)
 #define NULL Json_Type(nullptr)
+
+#define KEY(name) Json_Type name = (1>2) ? Json_Type()
+//x = (y < 10) ? 30 : 40;
+
+//JSON(book) = OBJECT{
+//
+//    KEY(title) : STRING("Gone Girl"),           // isws operator overload to : ??
+//    KEY(published) : NUMBER(2012),
+//    KEY(type) : STRING("Thriller"),
+//    }
+//}
 
 #define PRINT ;std::cout <<
 
@@ -32,14 +43,6 @@
         Json_Type mytmp("Variable"); \
         std::map<std::string, Json_Type> TMPobj; \
         std::vector<Json_Type> TMParray;
-
-//JSON(book) = OBJECT{
-//
-//    KEY(title) : STRING("Gone Girl"),           // isws operator overload to : ??
-//    KEY(published) : NUMBER(2012),
-//    KEY(type) : STRING("Thriller"),
-//    }
-//}
 
 #define PROGRAM_END \
     ;               \
@@ -202,7 +205,6 @@ public:
         }
         return *obj;
     }
-
     Json_Type& operator[](Json_Type obj);
 
     Json_Type& operator,(Json_Type obj1);
@@ -228,6 +230,9 @@ Json_Type& Json_Type::operator,(Json_Type obj1)
     temp.setArray(obj1.GetArray());
     temp.setBool(obj1.GetBool());
     temp.setObject(obj1.GetDataobj());
+
+    temp.Json_Type::Json_Type("newString");
+    std::cout << temp.GetName();
 
     auto it= CollectionVariables.end();
     it--;
