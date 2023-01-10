@@ -5,151 +5,127 @@ std::unordered_map<std::string, Json_Type> CollectionVariables;
 
 Json_Type Json_Type::operator[](Json_Type obj)
 {
-    std::cout << "\n[]\n";
     Helper = 0;
     this->setArray(obj.array);
-    
-    //this->setName(CurrName);
-    //obj.setName(CurrName);
-    //AddToVector(this->GetName(), *this);
-    //std::cout << this->GetName();
-    // auto it = CollectionVariables.begin();
-    // for (int j = 0; j < it->second.array.size(); j++)
-    // {
-    //     std::cout << it->second.array.at(j).GetNumberInt() << "\n";
-    // }
-    for(int i=0;i<obj.GetArray().size();i++){
-        std::cout<<obj.GetNumberInt()<<"\n";
-    }
-     std::cout<<this->GetNumberInt()<< ";a;a\n";
-    std::cout<<obj.GetNumberInt()<< ";a;a\n";
-    AddToVector(this->GetName(),*this);
-                                                           //  AddToVector(CurrName, it->second);
-    // it->second = *this;
     return *this;
 };
 
 
-//JSON(week_temperatures2) = ARRAY[NUMBER(20), NUMBER(19), NUMBER(18), NUMBER(17), NUMBER(16), NUMBER(15), NUMBER(14)]
-
 Json_Type Json_Type::operator,(Json_Type obj1)
 {
-    std::cout << "\n,,,\n";
-    //std::cout << it->first;
-    Json_Type temp;
-    temp.array=obj1.GetArray();
-    temp.numberDouble=obj1.GetNumberDouble();
-    temp.numberInt=obj1.GetNumberInt();
-    temp.string=obj1.GetString();
-    temp.boolean=obj1.GetBool();
-    temp.dataobj=obj1.GetDataobj();
-    temp.flag=obj1.GetFlag();
-    temp.Name=obj1.GetName();
     if (Helper == 0) {
-        this->array.push_back(*this);
-        //std::cout << this->GetNumberInt() << " ";
+        this->array.push_back(this->GetNumberInt());
+		obj1.setName(this->GetName());
         Helper++;
+        std::cout << obj1.Name;
+	    // AddToVector(obj1.GetName(),*this);
     }
-
-    this->array.push_back(obj1);
-    //std::cout << this->GetNumberInt() << " ";
-    //for (int j = 0; j < this->array.size(); j++)
-    //{
-    //    std::cout << this->array.at(j).GetNumberInt() << "\n";
-    //}
-    
-    //                                                                          it->second.array.push_back(temp);
-    //std::cout << obj1.GetNumberInt() << " ";
-//    for (int j = 0; j < it->second.array.size(); j++)
-//     {
-//        std::cout << it->second.array.at(j).GetNumberInt() << "\n";
-//     }
-    // std::cout << it->first << "\n";
-    // std::cout<<obj1.GetName()<<"okok"; 
-    
-    return obj1;
+	this->array.push_back(obj1.GetNumberInt());
+	obj1.setName(this->GetName());
+    // CollectionVariables.begin()->second.array.push_back(obj1);
+    return *this;
 }
 
-inline void Json_Type::AddToVector(std::string(NameVar), Json_Type variable)
-{
-    CollectionVariables.insert(std::pair<std::string, Json_Type>(NameVar, variable));
-
-    for (auto& elem : CollectionVariables)
-    {
-        //std::cout << elem.first << "\n";
-        //std::cout << elem.second.GetString() << std::endl;
-
-        if (elem.first == "empObj3") {
-            for (int j = 0; j < elem.second.array.size(); j++)
-            {
-
-                //std::cout << elem.first << "\n";
-                //std::cout << "\n" << elem.second.array.at(j).GetNumberInt();
+std::ostream &operator<<(std::ostream &os, Json_Type &probj){
+        std::list<Json_Type> list;
+        list=probj.GetDataobj();
+    //     for (auto &i:list) {
+    //         os << &i << std::endl;
+    //     }
+    //     for(int i=0;i<probj.GetDataobj().size(); i++) {
+    //      if(probj.GetDataobj()[i].GetFlag() == 1){
+    //         std::cout << probj.GetDataobj()[i].GetString();
+    //    }else if(probj.GetDataobj()[i].GetFlag() == 2){
+    //         std::cout << probj.GetDataobj()[i].GetNumberInt();
+    //    }else if(probj.GetDataobj()[i].GetFlag() == 3){
+    //         std::cout << probj.GetDataobj()[i].GetNumberDouble();
+    //     }else if(probj.GetDataobj()[i].GetFlag() == 5){
+    //             for(int k = 0; i < probj.GetDataobj()[i].array.size(); j++){
+    //                  std:: cout << k << ") " << probj.GetDataobj()[i].array[k];
+    //               }
+    //          }
+    //     }
+        if(probj.GetFlag()==1) {
+            os<< "String of " << probj.GetName() << " is : " << probj.GetString() << "\n";
+        }
+        else if(probj.GetFlag()==2) {
+            os << probj.GetName() << " : " << probj.GetNumberInt() << "\n";
+        }
+        else if(probj.GetFlag()==3){
+            os << probj.GetNumberDouble() << " ";
+        }
+        else if(probj.GetFlag()==5){
+            os << "Array of " << probj.GetName() << " has :\n";
+            for (int i = 0; i < probj.GetArray().size(); i++) {
+                os << "Index " << i << probj.GetArray()[i];
             }
         }
-    }
-};
-bool Json_Type::IS_EMPTY(){
-        if(this->flag == 5){
-            if(this->array.size() == 0){
-                return true;
-            }else{
-                return false;
-            }
-        }else if(this->flag==4){
-            if(this->dataobj.size() == 0){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
+        return os;
 }
 
- std::string Json_Type::TYPE_OF(){
-
-        if(this->flag == 1){
-            return "string";
-        }else if(this->flag == 2 || this->flag == 3){
-            return "number";
-        }else if(this->flag == 4){
-            return "object";
-        }else if(this->flag == 5){
-            return "array";
-        }else{
-            return "NULL";
-        }
-
-    }
-
-
-//void AddToVector(std::string(NameVar), Json_Type variable)
+//inline void Json_Type::AddToVector(std::string(NameVar), Json_Type variable)
 //{
 //    CollectionVariables.insert(std::pair<std::string, Json_Type>(NameVar, variable));
 //
-//    for (auto& elem : CollectionVariables)
-//    {
-//        std::cout << elem.first << "\n";
-//        std::cout << elem.second.GetString()<<std::endl;
-//        if (elem.first == "empObj2") {
-//            std::cout << elem.second.GetString() << std::endl;
-//        }
-//    }
-//}
-// 
-// template<typename T> T& Json_Type::operator[](T elem)
-//{
-//     std::string elements = elem;
-//     std::cout << elem;
-//
-//
-//     return elements;
-//     /*this->array.push_back(obj);
-//     for (size_t i = 0; i < array.size(); ++i)
-//     {
-//         std::cout << array[i] << ' ';
-//     }
-//     return *this;*/
-//     // or  return *obj;
-// }
+//    //for (auto& elem : CollectionVariables)
+//    //{
+//    //    //std::cout << elem.first << "\n";
+//    //    for (int j = 0; j < elem.second.array.size(); j++)
+//    //    {
+//    //        std::cout << elem.second.GetArray()[j].GetNumberInt() << "\n";
+//    //    }
+//    //}
+//};
+
+std::string Json_Type::ISEMPTY(Json_Type& probj){
+    std::string ret;
+    if(probj.GetFlag() == 5){
+        if(probj.array.size() == 0){
+            ret = "Has variable " + probj.GetName() + "empty array? = TRUE\n";
+            return ret;
+        }else{
+            return ret = "Has variable " + probj.GetName() + "empty array? = FALSE\n";
+            return ret;
+        }
+    }else if(probj.GetFlag()==4){
+        if(probj.dataobj.size() == 0){
+            return ret = "Has variable " + probj.GetName() + " empty object? = TRUE\n";
+            return ret;
+        }else{
+            return ret = "Has variable " + probj.GetName() + " empty object? = FALSE\n";
+            return ret;
+        }
+    }else{
+        ret = "Variable " + probj.GetName() + " isn't an array or an object!\n";
+        return ret;
+    }
+}
+
+ std::string Json_Type::TYPEOF(Json_Type& probj){
+    if(probj.GetFlag() == 1){
+        return "string";
+    }else if(probj.GetFlag() == 2 || probj.GetFlag() == 3){
+        return "number";
+    }else if(probj.GetFlag() == 4){
+        return "object";
+    }else if(probj.GetFlag() == 5){
+        return "array";
+    }else{
+        return "NULL";
+    }
+ }
+
+std::string Json_Type::SIZEOF(Json_Type& probj) {
+    std::string ret;
+    switch (probj.GetFlag()) {
+        case 4:                                                                             
+            ret = "Variable " + probj.GetName() + " has an object with size : " + std::to_string(probj.GetDataobj().size()) + "\n";
+            return ret;
+        case 5:                                                                             
+            ret = "Variable " + probj.GetName() + " has an array with size : " + std::to_string(probj.GetArray().size()) + "\n";
+            return ret;
+        default:                                                                            
+            ret = "The size of variable " + probj.GetName() + " is : 1\n";                                  
+            return ret;
+    }
+}
