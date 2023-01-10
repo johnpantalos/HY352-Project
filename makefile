@@ -16,15 +16,9 @@
 CC=g++ 
 CFLAGS=-std=c++11 -Wall
 
-all: json
-
-json:	json_code.cpp
-	$(CC) $(CFLAGS) json_code.cpp -o json
+all:
+	$(CC) $(CFLAGS) json_file.cpp main.cpp -o json
+	./json
 
 clean:
-	rm -rf *o json
-
-run:	json_code.cpp
-	$(CC) $(CFLAGS) json_code.cpp -o json
-	./json
 	rm -rf *o json
