@@ -10,49 +10,81 @@ Json_Type Json_Type::operator[](Json_Type obj)
     return *this;
 };
 
-
 Json_Type Json_Type::operator,(Json_Type obj1)
 {
-    if (Helper == 0) {
-        this->array.push_back(this->GetNumberInt());
-		obj1.setName(this->GetName());
-        Helper++;
-        std::cout << obj1.Name;
-	    // AddToVector(obj1.GetName(),*this);
+    if (this->GetFlag() == 4)
+    {
+        if (obj1.GetFlag() == 1)
+        {
+            obj1.setKey(obj1.GetString());
+            this->dataobj.push_back(obj1.GetString());
+        }
+        else if (obj1.GetFlag() == 2)
+        {
+            this->dataobj.push_back(obj1.GetNumberInt());
+        }
+        else if (obj1.GetFlag() == 3)
+        {
+            this->dataobj.push_back(obj1.GetNumberDouble());
+        }
+        else if (obj1.GetArray().size() != 0 || obj1.GetFlag() == 5)
+        {
+            for (int i = 0; i < obj1.GetArray().size(); i++)
+            {
+                this->dataobj.push_back(obj1.GetArray()[i]);
+            }
+        }
+    }else{
+        if (Helper == 0)
+        {
+            this->array.push_back(this->GetNumberInt());
+            obj1.setName(this->GetName());
+            Helper++;
+            std::cout << obj1.Name;
+            // AddToVector(obj1.GetName(),*this);
+            
+        }
+        this->array.push_back(obj1.GetNumberInt());
+        // obj1.setName(this->GetName());
     }
-	this->array.push_back(obj1.GetNumberInt());
-	obj1.setName(this->GetName());
+    obj1.setName(this->GetName());
     // CollectionVariables.begin()->second.array.push_back(obj1);
     return *this;
 }
-
 std::ostream &operator<<(std::ostream &os, Json_Type &probj){
-        std::list<Json_Type> list;
-        list=probj.GetDataobj();
-    //     for (auto &i:list) {
-    //         os << &i << std::endl;
-    //     }
-    //     for(int i=0;i<probj.GetDataobj().size(); i++) {
-    //      if(probj.GetDataobj()[i].GetFlag() == 1){
-    //         std::cout << probj.GetDataobj()[i].GetString();
-    //    }else if(probj.GetDataobj()[i].GetFlag() == 2){
-    //         std::cout << probj.GetDataobj()[i].GetNumberInt();
-    //    }else if(probj.GetDataobj()[i].GetFlag() == 3){
-    //         std::cout << probj.GetDataobj()[i].GetNumberDouble();
-    //     }else if(probj.GetDataobj()[i].GetFlag() == 5){
-    //             for(int k = 0; i < probj.GetDataobj()[i].array.size(); j++){
-    //                  std:: cout << k << ") " << probj.GetDataobj()[i].array[k];
-    //               }
-    //          }
-    //     }
+    std::list<Json_Type> list;
+    Json_Type it_prev;
+    list = probj.GetDataobj();
+    //if(probj.GetFlag()==4)
+    if(!list.empty()){
+        for(auto &it:list){
+            
+             os<<it<<std::endl;
+            if(it.GetFlag()==1){
+                os<< "String of " << it.GetKey() << " is : " << it.GetString() << "\n";
+            }if(it.GetFlag()==2){
+                os << "Number of " << it.GetString() << " is : " << it.GetNumberInt();
+            }
+            if(it.GetFlag()==3){
+                os << "Number of " << it.GetString() << " is : " << it.GetNumberDouble();
+            }
+            if(it.GetFlag()==5){
+                // os << "Array of " << it.GetName() << " has :\n";
+                // for (int i = 0; i < it.GetArray().size(); i++) {
+                // os << "Index " << i << it.GetArray()[i];
+                // }
+            }
+            it_prev = it;
+        }
+    }else{
         if(probj.GetFlag()==1) {
-            os<< "String of " << probj.GetName() << " is : " << probj.GetString() << "\n";
+             os<< "String of " << probj.GetName() << " is : " << probj.GetString() << "\n";
         }
         else if(probj.GetFlag()==2) {
-            os << probj.GetName() << " : " << probj.GetNumberInt() << "\n";
+             os << probj.GetName() << " : " << probj.GetNumberInt() << "\n";
         }
         else if(probj.GetFlag()==3){
-            os << probj.GetNumberDouble() << " ";
+             os << probj.GetNumberDouble() << " ";
         }
         else if(probj.GetFlag()==5){
             os << "Array of " << probj.GetName() << " has :\n";
@@ -60,7 +92,9 @@ std::ostream &operator<<(std::ostream &os, Json_Type &probj){
                 os << "Index " << i << probj.GetArray()[i];
             }
         }
-        return os;
+    }
+       
+    return os;
 }
 
 //inline void Json_Type::AddToVector(std::string(NameVar), Json_Type variable)
@@ -76,6 +110,7 @@ std::ostream &operator<<(std::ostream &os, Json_Type &probj){
 //    //    }
 //    //}
 //};
+ 
 
 std::string Json_Type::ISEMPTY(Json_Type& probj){
     std::string ret;
@@ -101,7 +136,7 @@ std::string Json_Type::ISEMPTY(Json_Type& probj){
     }
 }
 
- std::string Json_Type::TYPEOF(Json_Type& probj){
+std::string Json_Type::TYPEOF(Json_Type& probj){
     if(probj.GetFlag() == 1){
         return "string";
     }else if(probj.GetFlag() == 2 || probj.GetFlag() == 3){
@@ -113,7 +148,7 @@ std::string Json_Type::ISEMPTY(Json_Type& probj){
     }else{
         return "NULL";
     }
- }
+}
 
 std::string Json_Type::SIZEOF(Json_Type& probj) {
     std::string ret;
