@@ -7,12 +7,8 @@
 #include <unordered_map>
 #ifndef json_lib_h
 #define json_lib_h
-#define JSON(var)                          \
-    ;                                      \
-    Json_Type var;                         \
-    var.setName(#var);                     \
-    var
 
+#define JSON(var) ;Json_Type var; var.setName(#var); var
 #define STRING(name) Json_Type(name)
 #define NUMBER(num) Json_Type(num)
 #define ARRAY Json_Type(TMParray)
@@ -21,6 +17,8 @@
 #define FALSE Json_Type(false)
 #define NULL __null
 #define PRINT ;std::cout << "\n" <<
+#define HAS_KEY(variable, key) variable.HasKey(variable, key)
+
 #define SIZE_OF(value) ;std::cout << "\n" << value.SIZEOF(value)
 #define TYPE_OF(value) ;std::cout << "\n" << "The type of " << \
 value.GetName() << " is : " << value.TYPEOF(value) << "\n"
@@ -161,26 +159,31 @@ public:
     Json_Type operator=(Json_Type obj)
     {
         //std::cout << this->GetName()<<"\n";                             //TYPWNEI TO ONOMAA!!
-        this->setFlag(obj.GetFlag());
+        // this->setFlag(obj.GetFlag());
         switch (obj.GetFlag()) {
         case 1:
             this->setString(obj.string);
+            this->setFlag(1);
             break;
         case 2:
             this->setInt(obj.numberInt);
             if (obj.numberInt == 1) this->setBool(true);
             else if (obj.numberInt == 0) this->setBool(false);
+            this->setFlag(2);
             break;
         case 3:
             this->setdouble(obj.numberDouble);
+            this->setFlag(3);
             break;
         case 4:     // OBJECT
             this->dataobj.push_back(obj); 
+            this->setFlag(4);
             break;
         case 5:     // ARRAY
              for(int i = 0; i < obj.GetArray().size() ; i++){
                 this->array.push_back(obj.GetArray()[i]);
              }
+            this->setFlag(5);
             break;
         default:
             break;
@@ -188,14 +191,14 @@ public:
         return *this;
     }
     Json_Type operator[](Json_Type obj);
-
+    Json_Type operator[](const char* expression);
     Json_Type operator,(Json_Type obj1);
 
     friend std::ostream &operator<<(std::ostream &os, Json_Type &probj);
-    // friend std::ostream &operator<<(std::ostream &os, Json_Type *probj);
     std::string SIZEOF(Json_Type& probj);
     std::string ISEMPTY(Json_Type& probj);
     std::string TYPEOF(Json_Type& probj);
+    std::string HasKey(Json_Type& variable, std::string key);
 };
 
 #endif
