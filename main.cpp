@@ -1,6 +1,4 @@
 #include "json_lib.h"
-//JSON(emptyObj) = OBJECT{}
-
 PROGRAM_BEGIN
 
 //define emptyObj json with empty OBJECT
@@ -12,28 +10,30 @@ JSON(papa) = STRING("lala")
 JSON(emp2) = STRING("lala111")
 //JSON(object) = OBJECT;
 
-
-//KEY(papapa) : STRING("frapaa")
-
 JSON(book) = OBJECT{
 	KEY(title) : STRING("Gone Girl"),
 	KEY(published) : NUMBER(2012),
 	KEY(published1) : NUMBER(2012.2),
 	KEY(type) : STRING("Thriller"),
-	KEY(grades):ARRAY[NUMBER(10), NUMBER(7), NUMBER(5), NUMBER(6), NUMBER(8), NUMBER(9), NUMBER(7)]
+	KEY(grades) : ARRAY[NUMBER(10), NUMBER(7), NUMBER(5), NUMBER(6), NUMBER(8), NUMBER(9), NUMBER(7)]
 }
 
 PRINT empObj1
+SIZE_OF(week_temperatures2)
 PRINT papa
 PRINT week_temperatures2
-
-SIZE_OF(week_temperatures2)
-
 SIZE_OF(papa)
 
-
-
 PRINT book
+
+//PRINT book["title"]
+PRINT HAS_KEY(book, "published1")
+PRINT HAS_KEY(book, "published")
+PRINT HAS_KEY(book, "type")
+PRINT HAS_KEY(book, "type1")
+PRINT HAS_KEY(book, "title")
+PRINT HAS_KEY(book, "grades")
+PRINT HAS_KEY(book, "grades1")
 
 //JSON(week_temperatures) = ARRAY[NUMBER(20)]
 
