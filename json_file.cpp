@@ -2,11 +2,20 @@
 
 int Helper = 0;
 std::unordered_map<std::string, Json_Type> CollectionVariables;
+// Json_Type Json_Type::operator[](const char* expression){
+//     std::string exp=expression;
+//     std::list<Json_Type> list;
+//     list = probj.GetDataobj();
+//     for(auto &it:list){
+//         if()
+//     }
 
+//  }
 Json_Type Json_Type::operator[](Json_Type obj)
 {
     Helper = 0;
     this->setArray(obj.array);
+    
     return *this;
 };
 
@@ -51,49 +60,57 @@ Json_Type Json_Type::operator,(Json_Type obj1)
     // CollectionVariables.begin()->second.array.push_back(obj1);
     return *this;
 }
+
+int washere=0;
 std::ostream &operator<<(std::ostream &os, Json_Type &probj){
     std::list<Json_Type> list;
-    Json_Type it_prev;
     list = probj.GetDataobj();
-    //if(probj.GetFlag()==4)
-    if(!list.empty()){
+    if(!list.empty() && probj.GetFlag()==4) {
+        if (washere==0) {
+            os << "Object " << probj.GetName() << " has :" << "\n";
+            washere=1;
+        }
         for(auto &it:list){
-            
-             os<<it<<std::endl;
-            if(it.GetFlag()==1){
-                os<< "String of " << it.GetKey() << " is : " << it.GetString() << "\n";
-            }if(it.GetFlag()==2){
-                os << "Number of " << it.GetString() << " is : " << it.GetNumberInt();
+            os<<it<<std::endl;
+            if(it.GetFlag()==1) {
+                os<< "    String of " << it.GetKey() << " is : " << it.GetString() << "\n";
+            }if(it.GetFlag()==2) {
+                os << "    Number of " << it.GetString() << " is : " << it.GetNumberInt() << "\n";
             }
-            if(it.GetFlag()==3){
-                os << "Number of " << it.GetString() << " is : " << it.GetNumberDouble();
+            if(it.GetFlag()==3) {
+                os << "    Number of " << it.GetString() << " is : " << it.GetNumberDouble() << "\n";
             }
-            if(it.GetFlag()==5){
-                // os << "Array of " << it.GetName() << " has :\n";
-                // for (int i = 0; i < it.GetArray().size(); i++) {
-                // os << "Index " << i << it.GetArray()[i];
-                // }
+            if(it.GetFlag()==5) {
+                os << "    Array of " << it.GetKey() << " has :\n";
+                for (int i = 0; i < it.GetArray().size(); i++) {
+                os << "    Index " << i << it.GetArray()[i];
+                }
             }
-            it_prev = it;
         }
-    }else{
-        if(probj.GetFlag()==1) {
-             os<< "String of " << probj.GetName() << " is : " << probj.GetString() << "\n";
+    }
+    else
+    {
+        washere=0;
+        if (probj.GetFlag() == 1 && probj.GetKey() == "")
+        {
+            os << "String of " << probj.GetName() << " is : " << probj.GetString() << "\n";
         }
-        else if(probj.GetFlag()==2) {
-             os << probj.GetName() << " : " << probj.GetNumberInt() << "\n";
+        else if (probj.GetFlag() == 2 && probj.GetKey() == "")
+        {
+            os << probj.GetName() << " : " << probj.GetNumberInt() << "\n";
         }
-        else if(probj.GetFlag()==3){
-             os << probj.GetNumberDouble() << " ";
+        else if (probj.GetFlag() == 3 && probj.GetKey() == "")
+        {
+            os << probj.GetNumberDouble() << " ";
         }
-        else if(probj.GetFlag()==5){
+        else if (probj.GetFlag() == 5 && probj.GetKey() == "")
+        {
             os << "Array of " << probj.GetName() << " has :\n";
             for (int i = 0; i < probj.GetArray().size(); i++) {
                 os << "Index " << i << probj.GetArray()[i];
             }
         }
     }
-       
     return os;
 }
 
@@ -111,7 +128,6 @@ std::ostream &operator<<(std::ostream &os, Json_Type &probj){
 //    //}
 //};
  
-
 std::string Json_Type::ISEMPTY(Json_Type& probj){
     std::string ret;
     if(probj.GetFlag() == 5){
@@ -163,4 +179,32 @@ std::string Json_Type::SIZEOF(Json_Type& probj) {
             ret = "The size of variable " + probj.GetName() + " is : 1\n";                                  
             return ret;
     }
+}
+
+std::string Json_Type::HasKey(Json_Type &variable, std::string key) {
+    std::string ret;
+    std::list<Json_Type> list;
+
+    list = variable.GetDataobj().begin()->GetDataobj();
+    
+    //for (auto& it1 : list) std::cout << it1.GetKey();
+    if (variable.GetFlag() == 4) {
+        for (auto& it : list) {
+            if (it.GetKey() == key) 
+            {
+                //ret = "Key '" + key + "' found at object " + variable.GetName() + "\n";
+                ret = "Object " + variable.GetName() + " has key '" + key + "'? TRUE\n";
+                return ret;
+            }
+            else 
+            {
+                ret = "Key '" + key + "' don't found at object " + variable.GetName() + "\n";
+            }
+        }
+    }
+    else
+    {
+        ret = "The Variable " + variable.GetName() + " is not an object to has a key!";
+    }
+    return ret;
 }
