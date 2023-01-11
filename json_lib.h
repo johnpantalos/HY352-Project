@@ -25,8 +25,7 @@
 #define TYPE_OF(value) ;std::cout << "\n" << "The type of " << \
 value.GetName() << " is : " << value.TYPEOF(value) << "\n"
 #define IS_EMPTY(value) ;std::cout << "\n" << value.ISEMPTY(value)
-
-#define KEY(name) Json_Type name = (1>2) ? Json_Type()
+#define KEY(name) Json_Type(#name,#name) = (1>2) ? Json_Type() 
 // #define KEY(name) Json_Type(tmp = #name) = 0 ? 0
 
 #define PROGRAM_BEGIN                            \
@@ -39,6 +38,7 @@ value.GetName() << " is : " << value.TYPEOF(value) << "\n"
 #define PROGRAM_END         \
     ;return 0;              \
     }
+
 //#define KEY(name) Json_Type(tmp = #name)
 //#define KEY(name) TMPobj.insert(std::pair<<std::string, Json_Type>(#name, mytmp) :               // sto telos tou object    (to diko mou map) = TMPobj; TMPobj = clear()
 
@@ -56,6 +56,7 @@ struct Json_Type
 private:
     int flag = 10;
     std::string Name = "";
+    std::string key = "";
     bool boolean = false; // True, False
     int* ptr = nullptr;   // null
     std::string string = "";
@@ -69,12 +70,15 @@ public:
 
     Json_Type(std::string str) : string(str) { this->flag = 1; };
 
+    Json_Type(std::string key, std::string str) : key(key), string(str) { this->flag = 1; };
+
     Json_Type(int intNum) : numberInt(intNum) { this->flag = 2; };
 
     Json_Type(double DoubleNum) : numberDouble(DoubleNum) { this->flag = 3; };
 
     Json_Type(std::initializer_list <Json_Type> Object)
     {
+        //this->key=Key;
         std::list<Json_Type>::iterator it;
         it = this->dataobj.begin();
         it = this->dataobj.insert(it, Object);
@@ -84,6 +88,10 @@ public:
 
     void setName(std::string name) {
         this->Name = name;
+    }
+
+    void setKey(std::string Key) {
+        this->key = Key;
     }
 
     void setString(std::string String) {
@@ -125,7 +133,9 @@ public:
     std::string GetString() {
         return this->string;
     }
-
+    std::string GetKey(){
+        return this->key;
+    }
     int GetNumberInt() {
         return this->numberInt;
     }
@@ -151,7 +161,6 @@ public:
     Json_Type operator=(Json_Type obj)
     {
         //std::cout << this->GetName()<<"\n";                             //TYPWNEI TO ONOMAA!!
-        
         this->setFlag(obj.GetFlag());
         switch (obj.GetFlag()) {
         case 1:
@@ -172,7 +181,6 @@ public:
              for(int i = 0; i < obj.GetArray().size() ; i++){
                 this->array.push_back(obj.GetArray()[i]);
              }
-            std::cout << obj.GetName();
             break;
         default:
             break;
@@ -184,10 +192,10 @@ public:
     Json_Type operator,(Json_Type obj1);
 
     friend std::ostream &operator<<(std::ostream &os, Json_Type &probj);
+    // friend std::ostream &operator<<(std::ostream &os, Json_Type *probj);
     std::string SIZEOF(Json_Type& probj);
     std::string ISEMPTY(Json_Type& probj);
     std::string TYPEOF(Json_Type& probj);
 };
 
 #endif
-
