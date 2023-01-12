@@ -2,15 +2,128 @@
 
 int Helper = 0;
 std::unordered_map<std::string, Json_Type> CollectionVariables;
-// Json_Type Json_Type::operator[](const char* expression){
-//     std::string exp=expression;
-//     std::list<Json_Type> list;
-//     list = probj.GetDataobj();
-//     for(auto &it:list){
-//         if()
-//     }
 
-//  }
+Json_Type Json_Type::operator+(Json_Type obj) {
+    // for cases 2 3 
+    std::string tmp;
+    int tmpnum;
+    double tmpdoub;
+    if (this->GetFlag() == 1 && obj.GetFlag() == 1) {
+        tmp = this->GetString() + obj.GetString();
+        this->setString(tmp);
+    }
+    else if (this->GetFlag() == 2 && obj.GetFlag() == 2) {
+        tmpnum = this->GetNumberInt() + obj.GetNumberInt();
+        this->setInt(tmpnum);
+    }
+    else if (this->GetFlag() == 3 && obj.GetFlag() == 3) {
+        tmpdoub = this->GetNumberDouble() + obj.GetNumberDouble();
+        this->setInt(tmpdoub);
+    }
+    else if (this->GetFlag() == 4 && obj.GetFlag() == 4) {
+    
+    }
+    else if (this->GetFlag() == 5 && obj.GetFlag() == 5) {
+    
+    }
+    return *this;
+};
+
+Json_Type Json_Type::operator-(Json_Type obj) {
+    if(this->GetFlag()==2 && obj.GetFlag()==2){
+        this->setInt(this->GetNumberInt()-obj.GetNumberInt());
+    }else if(this->GetFlag()==3 && obj.GetFlag()==3){
+        this->setdouble(this->GetNumberDouble()-obj.GetNumberDouble());
+    }
+
+        return *this;
+};
+
+Json_Type Json_Type::operator*(Json_Type obj) {
+ if(this->GetFlag()==2 && obj.GetFlag()==2){
+        this->setInt(this->GetNumberInt()*(obj.GetNumberInt()));
+    }else if(this->GetFlag()==3 && obj.GetFlag()==3){
+        this->setdouble(this->GetNumberDouble()*(obj.GetNumberDouble()));
+    }
+    return *this;
+};
+
+Json_Type Json_Type::operator/(Json_Type obj) {
+if(this->GetFlag()==2 && obj.GetFlag()==2){
+        this->setInt(this->GetNumberInt()/(obj.GetNumberInt()));
+    }else if(this->GetFlag()==3 && obj.GetFlag()==3){
+        this->setdouble(this->GetNumberDouble()/(obj.GetNumberDouble()));
+    }
+    return *this;
+};
+
+Json_Type Json_Type::operator%(Json_Type obj) {
+
+};
+
+
+
+
+
+
+
+
+
+//Json_Type Json_Type::operator[](std::string expression) {      //STRING
+//    for(int i=0;i<this->GetArray().size();i++){
+//        Json_Type js=this->GetArray()[i];
+//        if(js.GetString()==expression && js.GetKey()==""){
+//            return this->GetArray()[i].GetString();
+//        }
+//    }
+//    //if(this->GetDataobj().begin()->GetDataobj().begin()->GetKey()==expression /*&& js.GetKey()!=js.GetString()*/ && js.GetKey() != "") {
+//    //    return this->GetArray()[i].GetKey();
+//    //}
+//
+//    return *this;
+//};
+//int GLo = -1;
+//Json_Type& Json_Type::operator[](int number) {        //ARRAY
+//    if(this->GetArray().size() < number || this->GetArray().empty()) {
+//        std::cout << "Index out of bounds" << std::endl;
+//        return *this;
+//    }
+//    GLo = number;
+//    this->GetArray().at(number);
+//    return this->GetArray().at(1);
+//};
+//
+//Json_Type Json_Type::operator*=(Json_Type obj) {    //ASSIGN
+//    
+//    
+//    //if (this->GetFlag() == 5) {
+//
+//        switch (obj.GetFlag())
+//        {
+//            case 1:
+//                this->setString(obj.GetString());
+//                break;
+//            case 2:
+//                if(!this->GetArray().empty() && this->GetArray().size()<GLo){
+//                      this->GetArray().at(GLo).setInt(obj.GetNumberInt());
+//                }
+//                break;
+//            case 3:
+//                this->setdouble(obj.GetNumberDouble());
+//                break;
+//            case 4:
+//                this->setObject(obj.GetDataobj());
+//                break;
+//            case 5:
+//                this->setArray(obj.GetArray());
+//                break;
+//            default:
+//                break;
+//            }
+//    //}
+//    return *this;
+//};
+
 Json_Type Json_Type::operator[](Json_Type obj)
 {
     Helper = 0;
@@ -84,6 +197,7 @@ std::ostream &operator<<(std::ostream &os, Json_Type &probj){
                 os << "    Array of " << it.GetKey() << " has :\n";
                 for (int i = 0; i < it.GetArray().size(); i++) {
                 os << "    Index " << i << it.GetArray()[i];
+                //                                                              if flag==4 typwne to object mesa sto array
                 }
             }
         }
@@ -170,7 +284,7 @@ std::string Json_Type::SIZEOF(Json_Type& probj) {
     std::string ret;
     switch (probj.GetFlag()) {
         case 4:                                                                             
-            ret = "Variable " + probj.GetName() + " has an object with size : " + std::to_string(probj.GetDataobj().size()) + "\n";
+            ret = "Variable " + probj.GetName() + " has an object with size : " + std::to_string(probj.GetDataobj().begin()->GetDataobj().size()) + "\n";
             return ret;
         case 5:                                                                             
             ret = "Variable " + probj.GetName() + " has an array with size : " + std::to_string(probj.GetArray().size()) + "\n";
