@@ -18,13 +18,13 @@
 #define NULL __null
 #define PRINT ;std::cout << "\n" <<
 #define HAS_KEY(variable, key) variable.HasKey(variable, key)
-
+#define SET ;
+#define ASSIGN *=
 #define SIZE_OF(value) ;std::cout << "\n" << value.SIZEOF(value)
 #define TYPE_OF(value) ;std::cout << "\n" << "The type of " << \
 value.GetName() << " is : " << value.TYPEOF(value) << "\n"
 #define IS_EMPTY(value) ;std::cout << "\n" << value.ISEMPTY(value)
 #define KEY(name) Json_Type(#name,#name) = (1>2) ? Json_Type() 
-// #define KEY(name) Json_Type(tmp = #name) = 0 ? 0
 
 #define PROGRAM_BEGIN                            \
     int main()                                   \
@@ -50,7 +50,6 @@ value.GetName() << " is : " << value.TYPEOF(value) << "\n"
 
 struct Json_Type
 {
-
 private:
     int flag = 10;
     std::string Name = "";
@@ -131,9 +130,11 @@ public:
     std::string GetString() {
         return this->string;
     }
+
     std::string GetKey(){
         return this->key;
     }
+    
     int GetNumberInt() {
         return this->numberInt;
     }
@@ -158,8 +159,6 @@ public:
 
     Json_Type operator=(Json_Type obj)
     {
-        //std::cout << this->GetName()<<"\n";                             //TYPWNEI TO ONOMAA!!
-        // this->setFlag(obj.GetFlag());
         switch (obj.GetFlag()) {
         case 1:
             this->setString(obj.string);
@@ -176,7 +175,7 @@ public:
             this->setFlag(3);
             break;
         case 4:     // OBJECT
-            this->dataobj.push_back(obj); 
+            this->dataobj.push_back(obj);
             this->setFlag(4);
             break;
         case 5:     // ARRAY
@@ -190,15 +189,61 @@ public:
         }
         return *this;
     }
-    Json_Type operator[](Json_Type obj);
-    Json_Type operator[](const char* expression);
-    Json_Type operator,(Json_Type obj1);
+    Json_Type operator[](std::string expression); // STRING
+    Json_Type& operator[](int number);            // ARRAY
+    Json_Type operator[](Json_Type obj);          // ASSIGN & APPEND
+
+    Json_Type operator*=(Json_Type obj);    // ASSIGN
+    Json_Type operator,(Json_Type obj1);    // COMMA
+
+    // ARITHMITIKOI TELESTES
+    Json_Type operator+(Json_Type);
+    Json_Type operator-(Json_Type);
+    Json_Type operator*(Json_Type);
+    Json_Type operator/(Json_Type);
+    Json_Type operator%(Json_Type);
 
     friend std::ostream &operator<<(std::ostream &os, Json_Type &probj);
     std::string SIZEOF(Json_Type& probj);
     std::string ISEMPTY(Json_Type& probj);
     std::string TYPEOF(Json_Type& probj);
     std::string HasKey(Json_Type& variable, std::string key);
+    //void SetVar(Json_Type &variable);
 };
+    // void edit(myType &value, myType &input){
 
+    //     if(input.getINTEGER() != MAX_INT_JSON && value.getINTEGER() != MAX_INT_JSON){
+    //         value.getARRAY().push_back(value.getINTEGER());
+    //         value.getARRAY().push_back(input.getINTEGER());
+    //         return;
+    //     }
+    //     if(value.which == 8){
+    //         value.addHEADOFDATA(input);
+    //         value.setWHICH(7);
+    //         return;
+    //     }
+    //     if(input.which == 1){
+    //         value.setSTRING(input.name);
+    //         value.setWHICH(input.which);
+    //     }else if(input.which == 2){
+    //         value.setINTEGER(input.integer);
+    //         value.setWHICH(input.which);
+    //     }else if(input.which == 3){
+    //         value.setINTEGER(input.integer);
+    //         value.setWHICH(input.which);
+    //     }else if(input.which == 4){
+    //         value.setBOOLEAN(input.boolean);
+    //         value.setWHICH(input.which);
+    //     }else if(input.which == 5){
+    //         for(int i = 0; i < this->getARRAY().size() ; i++){
+    //             if(value.array[i] == MAX_INT_JSON){
+    //                 value.array[i] = input.integer;
+    //             }
+    //         }
+    //     }else if(input.which == 6 || input.which == 7){
+    //         value.addHEADOFDATA(input);
+    //         value.setWHICH(input.which);
+    //     }
+
+    // }
 #endif
