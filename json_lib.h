@@ -37,17 +37,6 @@ value.GetName() << " is : " << value.TYPEOF(value) << "\n"
     ;return 0;              \
     }
 
-//#define KEY(name) Json_Type(tmp = #name)
-//#define KEY(name) TMPobj.insert(std::pair<<std::string, Json_Type>(#name, mytmp) :               // sto telos tou object    (to diko mou map) = TMPobj; TMPobj = clear()
-
-//JSON(book) = OBJECT{
-//
-//    KEY(title) : STRING("Gone Girl"),
-//    KEY(published) : NUMBER(2012),
-//    KEY(type) : STRING("Thriller"),
-//    }
-//}
-
 struct Json_Type
 {
 private:
@@ -75,7 +64,6 @@ public:
 
     Json_Type(std::initializer_list <Json_Type> Object)
     {
-        //this->key=Key;
         std::list<Json_Type>::iterator it;
         it = this->dataobj.begin();
         it = this->dataobj.insert(it, Object);
@@ -155,7 +143,6 @@ public:
         return this->array;
     }
 
-    //void AddToVector(std::string(NameVar), Json_Type variable);
 
     Json_Type operator=(Json_Type obj)
     {
@@ -185,11 +172,13 @@ public:
             this->setFlag(5);
             break;
         default:
+
             break;
         }
         return *this;
     }
-    Json_Type operator[](std::string expression); // STRING
+    
+    std::string operator[](std::string expression);// STRING
     Json_Type& operator[](int number);            // ARRAY
     Json_Type operator[](Json_Type obj);          // ASSIGN & APPEND
 
@@ -202,48 +191,20 @@ public:
     Json_Type operator*(Json_Type);
     Json_Type operator/(Json_Type);
     Json_Type operator%(Json_Type);
+    Json_Type operator<(Json_Type obj);
+    Json_Type operator<=(Json_Type obj);
+    Json_Type operator>(Json_Type obj);
+    Json_Type operator>=(Json_Type obj);
+    Json_Type operator&&(Json_Type obj);
+    Json_Type operator||(Json_Type obj);
+    Json_Type operator!();
+    Json_Type operator==(Json_Type obj);
+    Json_Type operator!=(Json_Type obj);
 
     friend std::ostream &operator<<(std::ostream &os, Json_Type &probj);
     std::string SIZEOF(Json_Type& probj);
     std::string ISEMPTY(Json_Type& probj);
     std::string TYPEOF(Json_Type& probj);
     std::string HasKey(Json_Type& variable, std::string key);
-    //void SetVar(Json_Type &variable);
 };
-    // void edit(myType &value, myType &input){
-
-    //     if(input.getINTEGER() != MAX_INT_JSON && value.getINTEGER() != MAX_INT_JSON){
-    //         value.getARRAY().push_back(value.getINTEGER());
-    //         value.getARRAY().push_back(input.getINTEGER());
-    //         return;
-    //     }
-    //     if(value.which == 8){
-    //         value.addHEADOFDATA(input);
-    //         value.setWHICH(7);
-    //         return;
-    //     }
-    //     if(input.which == 1){
-    //         value.setSTRING(input.name);
-    //         value.setWHICH(input.which);
-    //     }else if(input.which == 2){
-    //         value.setINTEGER(input.integer);
-    //         value.setWHICH(input.which);
-    //     }else if(input.which == 3){
-    //         value.setINTEGER(input.integer);
-    //         value.setWHICH(input.which);
-    //     }else if(input.which == 4){
-    //         value.setBOOLEAN(input.boolean);
-    //         value.setWHICH(input.which);
-    //     }else if(input.which == 5){
-    //         for(int i = 0; i < this->getARRAY().size() ; i++){
-    //             if(value.array[i] == MAX_INT_JSON){
-    //                 value.array[i] = input.integer;
-    //             }
-    //         }
-    //     }else if(input.which == 6 || input.which == 7){
-    //         value.addHEADOFDATA(input);
-    //         value.setWHICH(input.which);
-    //     }
-
-    // }
 #endif
