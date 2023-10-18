@@ -6,22 +6,17 @@ Team members:
 John Pantalos
 Anestis Kivroglou
 C++ VERSION 11
-Το IDE που εχουμε ειναι Visual Studio Code αλλα τα τρεχουμε σε ubuntu terminal 18.04 
-Το προγραμμα το κανουμε build με makefile κανοντας compile το main.cpp και το json_file.cpp με include το json_lib.h
-To project μας αποτελειται απο:
-Την δηλωση των json variables και objects,arrays εκτος απο εμφωλευμενα array με objects
-Tις συναρτησεις 
- SIZE_OF(json_value_or_variable)
- 
- IS_EMPTY(json_value_or_variable)
 
- HAS_KEY(json_value_or_variable, key)
+The IDE we use is Visual Studio Code, but we execute it in the Ubuntu terminal 18.04. We build the program using a makefile, compiling the main.cpp and json_file.cpp files with the inclusion of the json_lib.h.
 
- TYPE_OF(json_value_or_variable) 
- Επισης εχουμε υλοποιησει την print εκτος απο την περιπτωση PRINT book["title"]["name"] 
- τους αριθμητικους τελεστες για ολες τις μεταβλητες και αντικειμενα και τους συγκριτηκους <=  και >= 
- τους boolean συντελεστες εκτος απο τον ελεγχο των arrays και objects
- δεν εχουν υλοποιηθει οι λειτουργιες set και erase
- 
- 
- 
+Our project consists of:
+
+-Declaring JSON variables and objects, including arrays, except for nested arrays with objects.
+-The following functions:
+    SIZE_OF(json_value_or_variable)
+    IS_EMPTY(json_value_or_variable)
+    HAS_KEY(json_value_or_variable, key)
+    TYPE_OF(json_value_or_variable)
+
+Additionally, we have implemented the "print" function, except in the case of "PRINT book["title"]["name"]". We have implemented numerical operators for all variables and objects, as well as comparison operators (<= and >=).
+Boolean operators are implemented, except for checking arrays and objects. The "set" and "erase" functions have not been implemented.
