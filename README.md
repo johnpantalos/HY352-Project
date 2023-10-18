@@ -7,10 +7,9 @@ John Pantalos
 Anestis Kivroglou
 C++ VERSION 11
 
-The IDE we use is Visual Studio Code, but we execute it in the Ubuntu terminal 18.04. We build the program using a makefile, compiling the main.cpp and json_file.cpp files with the inclusion of the json_lib.h.
+We test and work on this project using Ubuntu terminal 18.04. We build the program using makefile, that compiles the main.cpp and json_file.cpp files with the inclusion of the json_lib.h.
 
 Our project consists of:
-
 -Declaring JSON variables and objects, including arrays, except for nested arrays with objects.
 -The following functions:
     SIZE_OF(json_value_or_variable)
